@@ -1,6 +1,7 @@
 <section data-ng-init="dashctrl.getUserData()">
   <section>
     <h1>Welcome, {{dashctrl.userData.email}}!</h1>
+    <button data-ng-click="dashctrl.signOut()">Sign Out</button>
     <section>
       <h2 data-ng-if="!dashctrl.userData.profile">You need to add a profile!</h2>
       <h2 data-ng-if="dashctrl.userData.profile">Feel free to update your profile!</h2>
@@ -28,8 +29,10 @@
         <label for="years_experience">Years Expereince:</label>
         <input type="number" required data-ng-model="dashctrl.profile.years_experience">
 
-        <label for="willing_to_manage">Willing to Manage?</label>
-        <input type="checkbox" required value=true data-ng-model="dashctrl.profile.willing_to_manage">
+        <label for="will_manage">Willing to Manage? Yes</label>
+        <input type="radio" required name="will_manage"  value=true data-ng-model="dashctrl.profile.willing_to_manage">
+        <label for="will_manage">No</label>
+        <input type="radio" required name="will_manage"  value=false checked data-ng-model="dashctrl.profile.willing_to_manage">
 
         <button type="submit" data-ng-disabled="profileform.$invalid">Update Profile</button>
       </form>

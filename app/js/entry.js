@@ -4,11 +4,14 @@ var passionCoded = angular.module('passionCoded', ['ngRoute']);
 
 require('./auth')(passionCoded);
 require('./dashboard')(passionCoded);
+require('./landing')(passionCoded);
 
 passionCoded.config(['$routeProvider', function($rp) {
   $rp
     .when('/', {
-      templateUrl: 'templates/landing_view.html'
+      templateUrl: 'templates/landing_view.html',
+      controller: 'LandingController',
+      controllerAs: 'landingctrl'
     })
     .when('/signup', {
       templateUrl: 'templates/auth_view.html',

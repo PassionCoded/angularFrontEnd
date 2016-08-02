@@ -9,7 +9,8 @@ module.exports = function(app) {
         .then((res) => {
           console.log('success!')
           console.log(res);
-          $http.defaults.headers.common.Authorization = 'Bearer ' +  res.data.auth_token;
+          window.localStorage.setItem('token', res.data.auth_token);
+          // $http.defaults.headers.common.Authorization = 'Bearer ' +  res.data.auth_token;
           $location.path('/dashboard');
         }, (err) => {
           console.log('there was an error');

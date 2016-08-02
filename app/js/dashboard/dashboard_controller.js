@@ -1,13 +1,11 @@
 const URL = require(__dirname + '/../config');
 
 module.exports = function(app) {
-  app.controller('DashboardController', ['$http', function($http) {
+  app.controller('DashboardController', ['$http', '$location', function($http, $location) {
     this.getUserData = function() {
-      console.log($http.defaults.headers.common.Authorization);
+      $http.defaults.headers.common.Authorization = 'Bearer ' +  window.localStorage.getItem('token');
       $http.get(URL.baseUrl + '/user_info')
         .then((res) => {
-          console.log('success!')
-          console.log(res);
           this.userData = res.data.user;
         }, (err) => {
           console.log('there was an error');
@@ -17,23 +15,37 @@ module.exports = function(app) {
     this.updateProfile = function(profile) {
       $http.post(URL.baseUrl + '/profile', JSON.stringify({profile}))
         .then((res) => {
-          console.log('amazing profile');
           this.userData = res.data.user;
         }, (err) => {
           console.log('some sort of error');
           console.log(err);
         });
+        this.clearInputs();
     };
 
     this.updatePassions = function(passions) {
       $http.post(URL.baseUrl + '/passions', JSON.stringify({'passions': [passions]}))
         .then((res) => {
-          console.log('such passion');
           this.userData = res.data.user;
         }, (err) => {
           console.log('some sort of error');
           console.log(err);
         });
+        this.clearInputs();
     };
+
+    this.signOut = function() {
+      window.localStorage.removeItem('token');
+      $location.path('/');
+    };
+
+    this.clearInputs = function() {
+      var inputTags = document.getElementsByTagName('input');
+      for (var i = 0; i < inputTags.length; i++) {
+        inputTags[i].value = null;
+        inputTags[i].checked = false;
+      }
+    };
+
   }]);
 };
