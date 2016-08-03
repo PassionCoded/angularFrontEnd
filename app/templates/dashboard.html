@@ -45,9 +45,11 @@
       <form name="passionform" data-ng-submit="dashctrl.updatePassions(dashctrl.passions)">
         <label for="passion">I am passionate about:</label>
         <input type="text" required data-ng-model="dashctrl.passions.name">
-
         <button type="submit" data-ng-disabled="passionform.$invalid">Add a passion</button>
       </form>
+      <div data-ng-if="dashctrl.duplicatePassion">You already listed {{dashctrl.duplicatePassionName | uppercase}} as one of your passions. Try something else!
+        <button data-ng-click="dashctrl.toggleDuplicatePassion()">clear</button>
+      </div>
     </section>
   </section>
 
