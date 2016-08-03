@@ -56,7 +56,7 @@ module.exports = function(app) {
 
     this.passionExists = function(passion) {
       for (var i = 0; i < this.userData.passions.length; i++) {
-        if (passion.name === this.userData.passions[i].name) return true;
+        if (passion.name.toLowerCase() === this.userData.passions[i].name) return true;
       }
       return false;
     };
