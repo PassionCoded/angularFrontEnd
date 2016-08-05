@@ -1,0 +1,56 @@
+<section data-ng-init="dashctrl.getUserData()">
+  <section>
+    <h1>Welcome, {{dashctrl.userData.email}}!</h1>
+    <button data-ng-click="dashctrl.signOut()">Sign Out</button>
+    <section>
+      <h2 data-ng-if="!dashctrl.userData.profile">You need to add a profile!</h2>
+      <h2 data-ng-if="dashctrl.userData.profile">Feel free to update your profile!</h2>
+      <section>
+        <p>First Name: {{dashctrl.userData.profile.first_name}}</p>
+        <p>Last Name: {{dashctrl.userData.profile.last_name}}</p>
+        <p>Profession: {{dashctrl.userData.profile.profession}}</p>
+        <p>Tech of Choice: {{dashctrl.userData.profile.tech_of_choice}}</p>
+        <p>Years of Experience:{{dashctrl.userData.profile.years_experience}}</p>
+        <p>Willing to Manage? {{dashctrl.userData.profile.willing_to_manage ? 'Yes' : 'No'}}</p>
+      </section>
+      <form name="profileform" data-ng-submit="dashctrl.updateProfile(dashctrl.profile)">
+        <label for="first name">First Name:</label>
+        <input type="text" required data-ng-model="dashctrl.profile.first_name">
+
+        <label for="last name">Last Name:</label>
+        <input type="text" required data-ng-model="dashctrl.profile.last_name">
+
+        <label for="profession">Profession:</label>
+        <input type="text" required data-ng-model="dashctrl.profile.profession">
+
+        <label for="tech_of_choice">Technology of Choice :</label>
+        <input type="text" required data-ng-model="dashctrl.profile.tech_of_choice">
+
+        <label for="years_experience">Years Expereince:</label>
+        <input type="number" required data-ng-model="dashctrl.profile.years_experience">
+
+        <label for="will_manage">Willing to Manage? Yes</label>
+        <input type="radio" required name="will_manage"  value=true data-ng-model="dashctrl.profile.willing_to_manage">
+        <label for="will_manage">No</label>
+        <input type="radio" required name="will_manage"  value=false checked data-ng-model="dashctrl.profile.willing_to_manage">
+
+        <button type="submit" data-ng-disabled="profileform.$invalid">Update Profile</button>
+      </form>
+    </section>
+    <section>
+      <h2 data-ng-if="!dashctrl.userData.passions.length">You need to add some passions!</h2>
+      <h2 data-ng-if="dashctrl.userData.passions.length">You can update your passions if you want to!</h2>
+      <h3>Your Passions: </h3>
+      <p data-ng-repeat="passion in dashctrl.userData.passions">{{passion.name}}</p>
+      <form name="passionform" data-ng-submit="dashctrl.updatePassions(dashctrl.passions)">
+        <label for="passion">I am passionate about:</label>
+        <input type="text" required data-ng-model="dashctrl.passions.name">
+        <button type="submit" data-ng-disabled="passionform.$invalid">Add a passion</button>
+      </form>
+      <div data-ng-if="dashctrl.duplicatePassion">You already listed {{dashctrl.duplicatePassionName | uppercase}} as one of your passions. Try something else!
+        <button data-ng-click="dashctrl.toggleDuplicatePassion()">clear</button>
+      </div>
+    </section>
+  </section>
+
+</seciton>
