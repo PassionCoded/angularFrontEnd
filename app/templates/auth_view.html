@@ -1,17 +1,19 @@
-<section>
-  <h1>{{authctrl.signup ? 'Creating A New User':'Signing in to existing user'}}</h1>
-  <form name="authform" data-ng-submit="authctrl.authenticate(authctrl.user)">
+<main>
+  <img class="logo" src="img/logo.png">
+  <section class="formbox">
+    <h1>{{authctrl.signup ? 'Sign Up':'Login'}}</h1>
+    <form name="authform" data-ng-submit="authctrl.authenticate(authctrl.user)">
+      <label for="email">Email:</label>
+      <input type="text" required data-ng-model="authctrl.user.email">
 
-    <a data-ng-href="/#/{{authctrl.signup? 'signin':'signup'}}">{{(authctrl.signup ? 'Or Sign into an exisiting user':'Or Create a New User')}}</a>
-    <label for="email">Email:</label>
-    <input type="text" required data-ng-model="authctrl.user.email">
+      <label for="password">Password:</label>
+      <input type="password" required data-ng-model="authctrl.user.password">
 
-    <label for="password">Password:</label>
-    <input type="password" required data-ng-model="authctrl.user.password">
+      <label data-ng-if="authctrl.signup" for="confirmation">Confirm Password:</label>
+      <input data-ng-if="authctrl.signup" required type="password" data-ng-model="authctrl.user.password_confirmation">
 
-    <label data-ng-if="authctrl.signup" for="confirmation">Confirm Password:</label>
-    <input data-ng-if="authctrl.signup" required type="password" data-ng-model="authctrl.user.password_confirmation">
-
-    <button type="submit" data-ng-disabled="authform.$invalid">{{authctrl.buttonText}}</button>
-  </form>
-</section>
+      <button type="submit" data-ng-disabled="authform.$invalid">{{authctrl.buttonText}}</button>
+    </form>
+    <a data-ng-href="/#/{{authctrl.signup? 'signin':'signup'}}">{{(authctrl.signup ? 'Login':'Sign Up')}}</a>
+  </section>
+</main>

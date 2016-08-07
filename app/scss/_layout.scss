@@ -1,0 +1,83 @@
+nav.landing {
+  height: 10%;
+  position: relative;
+  margin: 5% 0 5% 0;
+}
+
+.logo {
+  border-radius: 50%;
+  background: white;
+  color: black;
+  height: 150px;;
+  width: 20%;
+  position: relative;
+  left: 40%;
+  display: block;
+  margin: 5% 0 5% 0;
+}
+
+
+header {
+  margin: 5% 0 5% 0;
+  h1 {
+    text-align: center;
+    font : {
+      size: $titleFontSize;
+    }
+  }
+}
+
+.formbox {
+  position: relative;
+  border-radius: $standardRadius;
+  background: white;
+  width: 50%;
+  height: 50%;
+  left: 25%;
+  form {
+    position: relative;
+
+  }
+  h1 {
+    color: $blueText;
+    font : {
+      size: $titleFontSize;
+    }
+    @include form-input;
+  }
+  label {
+    color: $greyText;
+    font: {
+      size: $fieldFontSize;
+    }
+    @include form-input;
+    float: left;
+  }
+  input {
+    display: block;
+    @include form-input;
+    border: none;
+    border-bottom: 1px solid $greyText;  
+    margin: 5% 0 5% 0;
+    clear: right;
+  }
+  input:focus {
+    outline: none;
+    color: $blueText;
+  }
+  a {
+    display: block;
+    color: $blueText;
+    @include form-input;
+  }
+  button {
+    margin: 5% 0 5% 0;
+    display: block;
+    position: relative;
+    width: 24%;
+    left: 38%
+  }
+  button:hover:enabled {
+    border: 1px solid $blueText;
+  }
+}

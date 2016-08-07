@@ -5,5 +5,11 @@ module.exports = function(app) {
         $location.path('/dashboard');
       }
     };
+
+    this.redirect = function(url) {
+      $location.path(url);
+    };
+
+    this.class = 'landing';
   }]);
 };

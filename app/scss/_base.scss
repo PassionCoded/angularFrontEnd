@@ -1,0 +1,41 @@
+html {
+  height: 100%;
+}
+body {
+  font: {
+    family: $textFont, sans-serif;
+    size: $fieldFontSize;
+
+  }
+  color: white;
+  background-image: url('img/bg.png');
+  height: 100%;
+}
+
+body.landing {
+  background-image: url('img/splash_bg.png');
+}
+
+main {
+  height: 100%;
+  position: relative;
+}
+
+button {
+  background: $blueText;
+  color: white;
+  border: 0;
+  padding: 0;
+  position: absolute;
+  border-radius: $standardRadius;
+}
+
+button:hover {
+  background: white;
+  color: $blueText;
+}
+
+button:disabled {
+  color: $greyText;
+  background: lightgrey;
+}
