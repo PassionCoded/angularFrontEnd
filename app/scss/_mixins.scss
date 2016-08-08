@@ -2,3 +2,16 @@
   position: relative;
   left: 10%;
 }
+
+@mixin spacing {
+  margin: 2.5% 0;
+}
+
+@mixin progress($name, $start, $end) {
+  height: 100%;
+  min-width: $start;
+  max-width: $end;
+  border-radius: 20px;
+  background: $progressBar;
+  animation: $name 2s linear;
+}

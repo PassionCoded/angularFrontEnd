@@ -14,10 +14,13 @@
 
       <button type="submit" data-ng-disabled="authform.$invalid">{{authctrl.buttonText}}</button>
     </form>
-    <a data-ng-href="/#/{{authctrl.signup? 'signin':'signup'}}">{{(authctrl.signup ? 'Login':'Sign Up')}}</a>
+
+    <p data-ng-if="!authctrl.signup">or</p>
+    <img role="button" data-ng-if="!authctrl.signup" class="linkedin" src="{{'img/linked-in-' + authctrl.linkedInState + '.png'}}">
+      <a data-ng-href="/#/{{authctrl.signup? 'signin':'signup'}}">{{(authctrl.signup ? 'Login':'Sign Up')}}</a>
   </section>
 
-  <div class="progress-container">
+  <div data-ng-if="authctrl.signup" class="progress-container">
     <div class="progressbar1"></div>
   </div>
 

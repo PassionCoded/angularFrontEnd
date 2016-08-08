@@ -59,6 +59,11 @@
 	      controller: 'LandingController',
 	      controllerAs: 'landingctrl'
 	    })
+	    .when('/confirmation', {
+	      templateUrl: 'templates/confirmation.html',
+	      controller: 'LandingController',
+	      controllerAs: 'landingctrl'
+	    })
 	    .when('/signup', {
 	      templateUrl: 'templates/auth_view.html',
 	      controller: 'SignUpController',
@@ -69,8 +74,13 @@
 	      controller: 'SignInController',
 	      controllerAs: 'authctrl'
 	    })
-	    .when('/dashboard', {
+	    .when('/dashboard' || '/make-profile', {
 	      templateUrl: 'templates/dashboard.html',
+	      controller: 'DashboardController',
+	      controllerAs: 'dashctrl'
+	    })
+	    .when('/make-profile', {
+	      templateUrl: 'templates/complete_profile.html',
 	      controller: 'DashboardController',
 	      controllerAs: 'dashctrl'
 	    })
@@ -32972,7 +32982,8 @@
 	module.exports = function(app) {
 	  app.controller('SignInController', ['$http', '$location', function($http, $location) {
 	    this.signup = false;
-	    this.buttonText = 'Sign In';
+	    this.buttonText = 'Login';
+	    this.linkedInState = 'default';
 	    this.authenticate = function(user) {
 	      $http.post(URL.baseUrl + '/auth_user', JSON.stringify(user))
 	        .then((res) => {
@@ -33014,8 +33025,7 @@
 	          console.log('success!')
 	          console.log(res);
 	          window.localStorage.setItem('token', res.data.auth_token);
-	          // $http.defaults.headers.common.Authorization = 'Bearer ' +  res.data.auth_token;
-	          $location.path('/dashboard');
+	          $location.path('/make-profile');
 	        }, (err) => {
 	          console.log('there was an error');
 	          console.log(err);
@@ -33043,8 +33053,14 @@
 	module.exports = function(app) {
 	  app.controller('DashboardController', ['$http', '$location', function($http, $location) {
 
+	    this.userData = this.userData || {passions: []};
+
+	    this.getToken = function() {
+	        $http.defaults.headers.common.Authorization = 'Bearer ' +  window.localStorage.getItem('token');
+	    };
+
 	    this.getUserData = function() {
-	      $http.defaults.headers.common.Authorization = 'Bearer ' +  window.localStorage.getItem('token');
+	      this.getToken();
 	      $http.get(URL.baseUrl + '/user_info')
 	        .then((res) => {
 	          this.userData = res.data.user;
@@ -33061,7 +33077,6 @@
 	          console.log('some sort of error');
 	          console.log(err);
 	        });
-	      this.clearInputs();
 	    };
 
 	    this.updatePassions = function(passion) {
@@ -33078,12 +33093,19 @@
 	            console.log(err);
 	          });
 	        }
-	      this.clearInputs();
 	    };
 
 	    this.signOut = function() {
 	      window.localStorage.removeItem('token');
 	      $location.path('/');
+	    };
+
+	    this.updateAll = function(profile, passion) {
+	      if (profile) this.updateProfile(profile);
+	      if (passion) this.updatePassions(passion);
+	      this.clearInputs();
+	      this.editingProfile = false;
+	      if ($location.path() !== '/dashboard') $location.path('/confirmation');
 	    };
 
 	    this.clearInputs = function() {
@@ -33092,20 +33114,28 @@
 	        inputTags[i].value = null;
 	        inputTags[i].checked = false;
 	      }
+
+
+
+
 	    };
 
+
+
+
 	    this.passionExists = function(passion) {
-	      for (var i = 0; i < this.userData.passions.length; i++) {
-	        if (passion.name.toLowerCase() === this.userData.passions[i].name) return true;
+	      if (this.userData.passions.length) {
+	        for (var i = 0; i < this.userData.passions.length; i++) {
+	          if (passion.name.toLowerCase() === this.userData.passions[i].name) return true;
+	        }
+	        return false;
 	      }
-	      return false;
 	    };
 
 	    this.toggleDuplicatePassion = function() {
 	      this.duplicatePassion = !this.duplicatePassion;
 	      this.duplicatePassionName = '';
 	    };
-
 	  }]);
 	};
 
@@ -33124,7 +33154,7 @@
 /***/ function(module, exports) {
 
 	module.exports = function(app) {
-	  app.controller('LandingController', ['$location', function($location) {
+	  app.controller('LandingController', ['$location', '$timeout', function($location, $timeout) {
 	    this.redirectIfToken = function() {
 	      if (window.localStorage.getItem('token')) {
 	        $location.path('/dashboard');
@@ -33135,7 +33165,11 @@
 	      $location.path(url);
 	    };
 
-	    this.class = 'landing';
+	    this.timeoutRedirect = function(time){
+	      $timeout(this.redirectIfToken, time)
+	    };
+
+	    if ($location.path() === '/') this.class = 'landing';
 	  }]);
 	};
 

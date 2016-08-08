@@ -13,6 +13,11 @@ passionCoded.config(['$routeProvider', function($rp) {
       controller: 'LandingController',
       controllerAs: 'landingctrl'
     })
+    .when('/confirmation', {
+      templateUrl: 'templates/confirmation.html',
+      controller: 'LandingController',
+      controllerAs: 'landingctrl'
+    })
     .when('/signup', {
       templateUrl: 'templates/auth_view.html',
       controller: 'SignUpController',
@@ -23,8 +28,13 @@ passionCoded.config(['$routeProvider', function($rp) {
       controller: 'SignInController',
       controllerAs: 'authctrl'
     })
-    .when('/dashboard', {
+    .when('/dashboard' || '/make-profile', {
       templateUrl: 'templates/dashboard.html',
+      controller: 'DashboardController',
+      controllerAs: 'dashctrl'
+    })
+    .when('/make-profile', {
+      templateUrl: 'templates/complete_profile.html',
       controller: 'DashboardController',
       controllerAs: 'dashctrl'
     })

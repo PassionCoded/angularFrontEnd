@@ -3,8 +3,14 @@ const URL = require(__dirname + '/../config');
 module.exports = function(app) {
   app.controller('DashboardController', ['$http', '$location', function($http, $location) {
 
+    this.userData = this.userData || {passions: []};
+
+    this.getToken = function() {
+        $http.defaults.headers.common.Authorization = 'Bearer ' +  window.localStorage.getItem('token');
+    };
+
     this.getUserData = function() {
-      $http.defaults.headers.common.Authorization = 'Bearer ' +  window.localStorage.getItem('token');
+      this.getToken();
       $http.get(URL.baseUrl + '/user_info')
         .then((res) => {
           this.userData = res.data.user;
@@ -21,7 +27,6 @@ module.exports = function(app) {
           console.log('some sort of error');
           console.log(err);
         });
-      this.clearInputs();
     };
 
     this.updatePassions = function(passion) {
@@ -38,12 +43,19 @@ module.exports = function(app) {
             console.log(err);
           });
         }
-      this.clearInputs();
     };
 
     this.signOut = function() {
       window.localStorage.removeItem('token');
       $location.path('/');
+    };
+
+    this.updateAll = function(profile, passion) {
+      if (profile) this.updateProfile(profile);
+      if (passion) this.updatePassions(passion);
+      this.clearInputs();
+      this.editingProfile = this.editingPassions = false;
+      if ($location.path() !== '/dashboard') $location.path('/confirmation');
     };
 
     this.clearInputs = function() {
@@ -55,16 +67,17 @@ module.exports = function(app) {
     };
 
     this.passionExists = function(passion) {
-      for (var i = 0; i < this.userData.passions.length; i++) {
-        if (passion.name.toLowerCase() === this.userData.passions[i].name) return true;
+      if (this.userData.passions.length) {
+        for (var i = 0; i < this.userData.passions.length; i++) {
+          if (passion.name.toLowerCase() === this.userData.passions[i].name) return true;
+        }
+        return false;
       }
-      return false;
     };
 
     this.toggleDuplicatePassion = function() {
       this.duplicatePassion = !this.duplicatePassion;
       this.duplicatePassionName = '';
     };
-
   }]);
 };

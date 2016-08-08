@@ -1,7 +1,7 @@
 nav.landing {
   height: 10%;
   position: relative;
-  margin: 5% 0;
+  @include spacing
 }
 
 .logo {
@@ -13,14 +13,13 @@ nav.landing {
   position: relative;
   left: 40%;
   display: block;
-  margin: 5% 0;
+  @include spacing
 }
 
 
 header {
-  margin: 5% 0;
+  @include spacing;
   h1 {
-    text-align: center;
     font : {
       size: $titleFontSize;
     }
@@ -32,18 +31,23 @@ header {
   border-radius: $standardRadius;
   background: white;
   width: 50%;
-  height: 50%;
+  max-height: 33%;
   left: 25%;
+  padding: 2.5%;
   form {
     position: relative;
-
   }
   h1 {
     color: $blueText;
     font : {
       size: $titleFontSize;
+      weight: normal;
     }
     @include form-input;
+    @include spacing;
+    margin-botom: 5%;
+    text-align: left;
+
   }
   label {
     color: $greyText;
@@ -58,8 +62,9 @@ header {
     @include form-input;
     border: none;
     border-bottom: 1px solid $greyText;
-    margin: 5% 0;
+    @include spacing
     clear: right;
+    margin-left: 10px;
   }
   input:focus {
     outline: none;
@@ -68,22 +73,41 @@ header {
   a {
     display: block;
     color: $blueText;
+    text-decoration: none;
     @include form-input;
+    @include spacing;
   }
   button {
-    margin: 5% 0;
+    @include spacing
+    margin-top: 5%;
     display: block;
     position: relative;
     width: 24%;
-    left: 38%
-  }
-  button:hover:enabled {
+    left: 38%;
     border: 1px solid $blueText;
+  }
+  button:disabled {
+    border: 1px solid $greyText;
+  }
+  p {
+    color: $greyText;
+    margin: 0;
+    padding: 0;
+    @include spacing;
   }
 }
 
+.linkedin {
+  width: 50%;
+  position: relative;
+  left: 25%;
+  margin: 0;
+  padding: 0;
+  @include spacing;
+}
+
 .progress-container {
-  margin: 5% 0;
+  @include spacing;
   position: relative;
   left: 25%;
   width: 50%;
@@ -93,11 +117,7 @@ header {
 }
 
 .progressbar1 {
-  height: 100%;
-  max-width: 33%;
-  border-radius: 20px;
-  background: $progressBar;
-  animation: progress1 2s linear;
+  @include progress(progress1, 0, 33%);
 }
 
 @keyframes progress1 {
@@ -107,4 +127,35 @@ header {
   100% {
     width: 33%;
   }
+}
+.progressbar2 {
+  @include progress(progress2,33%, 66%);
+}
+
+@keyframes progress2 {
+  0% {
+    width: 33%;
+  }
+  100% {
+    width: 66%;
+  }
+}
+.progressbar3 {
+  @include progress(progress3, 66%, 100%);
+}
+
+@keyframes progress3 {
+  0% {
+    width: 66%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.check {
+  width: 10%;
+  height: 10%;
+  position: relative;
+  left: 45%;
 }

@@ -25,7 +25,7 @@ button {
   background: $blueText;
   color: white;
   border: 0;
-  padding: 0;
+  padding: 3px;
   position: absolute;
   border-radius: $standardRadius;
 }
@@ -38,4 +38,8 @@ button:hover {
 button:disabled {
   color: $greyText;
   background: lightgrey;
+}
+
+h1, h2, h3, p {
+  text-align: center;
 }

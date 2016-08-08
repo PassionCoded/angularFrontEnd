@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.controller('LandingController', ['$location', function($location) {
+  app.controller('LandingController', ['$location', '$timeout', function($location, $timeout) {
     this.redirectIfToken = function() {
       if (window.localStorage.getItem('token')) {
         $location.path('/dashboard');
@@ -10,6 +10,10 @@ module.exports = function(app) {
       $location.path(url);
     };
 
-    this.class = 'landing';
+    this.timeoutRedirect = function(time){
+      $timeout(this.redirectIfToken, time)
+    };
+
+    if ($location.path() === '/') this.class = 'landing';
   }]);
 };

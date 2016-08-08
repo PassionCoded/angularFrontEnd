@@ -10,8 +10,7 @@ module.exports = function(app) {
           console.log('success!')
           console.log(res);
           window.localStorage.setItem('token', res.data.auth_token);
-          // $http.defaults.headers.common.Authorization = 'Bearer ' +  res.data.auth_token;
-          $location.path('/dashboard');
+          $location.path('/make-profile');
         }, (err) => {
           console.log('there was an error');
           console.log(err);
