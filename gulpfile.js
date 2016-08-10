@@ -25,4 +25,8 @@ gulp.task('sass:dev', () => {
 
 gulp.task('build:dev', ['static:dev', 'webpack:dev', 'sass:dev']);
 
-gulp.task('default', ['build:dev']);
+gulp.task('build:watch', () => {
+  	gulp.watch('./app/**/*', ['build:dev']);
+});
+
+gulp.task('default', ['build:dev', 'build:watch']);

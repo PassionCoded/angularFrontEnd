@@ -2,6 +2,19 @@ nav.landing {
   height: 10%;
   position: relative;
   @include spacing
+  button {
+    position: absolute;
+    height: 100%;
+    width:  20%;
+  }
+  .signup {
+    left: 27.5%;
+  }
+
+  .login {
+    right: 27.5%;
+  }
+
 }
 
 .logo {
@@ -18,11 +31,30 @@ nav.landing {
 
 
 header {
+  // position: fixed;
+  // display: inline-block;
   @include spacing;
   h1 {
     font : {
       size: $titleFontSize;
     }
+  }
+  h2, button {
+    display: inline-block;
+  }
+}
+
+header.landing {
+  display: block;
+  h1 {
+  display: block;
+  }
+}
+
+.greeter {
+  position: relative;
+  h1 {
+  display: inline-block;
   }
 }
 
@@ -31,7 +63,7 @@ header {
   border-radius: $standardRadius;
   background: white;
   width: 50%;
-  max-height: 33%;
+  max-height: 50%;
   left: 25%;
   padding: 2.5%;
   form {
@@ -71,16 +103,16 @@ header {
     color: $blueText;
   }
   a {
-    display: block;
     color: $blueText;
     text-decoration: none;
+    display: block;
     @include form-input;
     @include spacing;
   }
   button {
     @include spacing
     margin-top: 5%;
-    display: block;
+    // display: block;
     position: relative;
     width: 24%;
     left: 38%;
@@ -158,4 +190,29 @@ header {
   height: 10%;
   position: relative;
   left: 45%;
+}
+
+.passions, .profile {
+  position: relative;
+  height: 33%;
+  margin: 5%, 0;
+  >section {
+    // position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    max-height: 100%;
+    overflow: scroll;
+    p {
+      // display: inline-block;
+    }
+  }
+  form, .duplicates-warning {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    max-height: 100%;
+    overflow: scroll;
+  }
 }

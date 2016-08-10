@@ -1,3 +1,7 @@
 module.exports = {
-  baseUrl: 'https://projectmypassion-api.herokuapp.com'
+  // production
+  // baseUrl: 'https://projectmypassion-api.herokuapp.com'
+
+  // dev "test" server
+  baseUrl: 'http://localhost:3000'
 };
