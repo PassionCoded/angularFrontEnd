@@ -62,7 +62,7 @@ header.landing {
   position: relative;
   border-radius: $standardRadius;
   background: white;
-  width: 50%;
+  width: 45%;
   max-height: 50%;
   left: 25%;
   padding: 2.5%;
@@ -97,6 +97,7 @@ header.landing {
     @include spacing
     clear: right;
     margin-left: 10px;
+    width: 70%;
   }
   input:focus {
     outline: none;

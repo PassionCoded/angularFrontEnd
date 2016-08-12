@@ -1,9 +1,8 @@
 const config = require(__dirname + '/../config');
 const md5 = require('md5');
 
-
 module.exports = function(app) {
-  app.controller('DashboardController', ['$http', '$location', function($http, $location) {
+  app.controller('DashboardController', ['$http', '$location', '$route', function($http, $location, $route) {
 
     this.userData = this.userData || {passions: []};
     this.passionsToDelete = [];
@@ -19,7 +18,6 @@ module.exports = function(app) {
           this.userData = res.data.user;
           this.gravatarHash = md5(this.userData.email);
         }, (err) => {
-          console.log('there was an error');
           console.log(err);
         });
     };
@@ -28,7 +26,6 @@ module.exports = function(app) {
         .then((res) => {
           this.userData = res.data.user;
         }, (err) => {
-          console.log('some sort of error');
           console.log(err);
         });
     };
@@ -43,7 +40,6 @@ module.exports = function(app) {
             this.userData = res.data.user;
             if (this.duplicatePassion) this.toggleDuplicatePassion();
           }, (err) => {
-            console.log('some sort of error');
             console.log(err);
           });
         }
@@ -80,13 +76,12 @@ module.exports = function(app) {
     };
 
     this.deletePassion = function(passion) {
+      var id = passion.id;
       this.userData.passions.splice(this.userData.passions.indexOf(passion), 1);
-      console.log(JSON.stringify({'passions': [{'name': passion.name}]}))
-      $http.delete(config.baseUrl + '/passions', JSON.stringify({'passions': [{'name': passion.name}]}))
+      $http.delete(config.baseUrl + '/passions/' + id)
       .then((res) => {
         this.userData = res.data.user;
       }, (err) => {
-        console.log('some sort of error');
         console.log(err);
       });
     }
@@ -95,6 +90,32 @@ module.exports = function(app) {
       this.duplicatePassion = !this.duplicatePassion;
       this.duplicatePassionName = '';
     };
+
+
+
+
+    this.buttonText = 'Update User';
+
+    this.updateUser = function(user) {
+      $http.put(config.baseUrl + '/edit_user', JSON.stringify({user}))
+        .then((res) => {
+          $route.reload();
+        }, (err) => {
+          console.log(err);
+        });
+    };
+
+    this.deleteUser = function(email) {
+      if (email === this.userData.email) {
+        return $http.delete(config.baseUrl + '/del_user')
+          .then((res) => {
+            this.signOut();
+          }, (err) => {
+            console.log(err);
+          });
+      }
+      this.incorrectEmail = true;
+    }
 
   }]);
 };
